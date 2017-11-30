@@ -1,6 +1,12 @@
 package com.fredericboisguerin.insa.chatSystem;
 
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
+
+import com.opencsv.CSVReader;
+
 
 public class Conversation {
 
@@ -12,7 +18,7 @@ public class Conversation {
 
     // CONSTRUCTEUR
 
-    public Conversation(Utilisateur utilisateur){
+    public Conversation(Utilisateur utilisateur) throws IOException {
         this.utilisateurDistant = utilisateur;
         this.conversation = recupererHistorique(utilisateur);
     }
@@ -23,9 +29,12 @@ public class Conversation {
         enregistrerConversation();
     }
 
-    public ArrayList<String> recupererHistorique(Utilisateur utilisateurDistant){
+    public ArrayList<String> recupererHistorique(Utilisateur utilisateurDistant) throws IOException {
         ArrayList<String> hist = new ArrayList<String>();
-
+        CSVReader reader = new CSVReader(new FileReader("contacts.csv"));
+        String [] nextLine;
+        while ((nextLine = reader.readNext()) != null) {
+        }
         return hist;
     }
 
