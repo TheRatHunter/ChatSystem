@@ -29,9 +29,9 @@ public class GUI extends JFrame {
         JPanel infoAboutUserPane  = new JPanel(new GridLayout(2,1));
 
         JButton sendButton = new JButton("Envoyer");
-        sendButton.addActionListener(e ->  this.messagerieAssociee.onSendButtonClicked("Coucou", messagerieAssociee.listOfContactsWithConversations.get(1)));
+        sendButton.addActionListener(e ->  this.messagerieAssociee.onSendButtonClicked("Coucou", messagerieAssociee.mapUsersByIP.get(1)));
         JButton changerPseudoButton = new JButton("Changer");
-        changerPseudoButton.addActionListener(e ->  this.messagerieAssociee.onSendButtonClicked("Coucou", messagerieAssociee.listOfContactsWithConversations.get(1)));
+        changerPseudoButton.addActionListener(e ->  this.messagerieAssociee.onSendButtonClicked("Coucou", messagerieAssociee.mapUsersByIP.get(1)));
         JButton parametresButton = new JButton("Paramètres");
         sendButton.addActionListener(e ->  this.onParametresButtonClicked());
 

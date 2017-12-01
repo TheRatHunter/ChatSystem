@@ -41,6 +41,10 @@ public class Conversation {
         return hist;
     }
 
+    public void ajouterMessage(String msg) {
+        conversation.add(msg);
+    }
+
     public void enregistrerConversation (){
         ArrayList<String> conv = new ArrayList<String>();
     }
