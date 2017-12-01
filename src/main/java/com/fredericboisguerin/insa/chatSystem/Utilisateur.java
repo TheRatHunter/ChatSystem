@@ -1,18 +1,21 @@
 package com.fredericboisguerin.insa.chatSystem;
+
+import java.net.InetAddress;
+
 public class Utilisateur {
 
-    private String pseudonyme;
+    public String pseudonyme;
+    public InetAddress ipAdress;
+    public int port;
+    public boolean disponible;
+    public Conversation conv;
 
-    public Utilisateur(String pseudo) {
+    public Utilisateur(String pseudo, InetAddress ip, int port) {
         this.pseudonyme = pseudo;
-    }
-
-    public void setPseudonyme(String pseudo){
-        this.pseudonyme = pseudo;
-    }
-
-    public String getPseudonyme() {
-        return this.pseudonyme;
+        this.ipAdress = ip;
+        this.disponible = true;
+        this.port = port;
+        this.conv = new Conversation(this);
     }
 
 }

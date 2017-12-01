@@ -13,14 +13,17 @@ public class Conversation {
     // ATTRIBUTS
 
     private Utilisateur utilisateurDistant;
-
     private ArrayList<String> conversation;
 
     // CONSTRUCTEUR
 
-    public Conversation(Utilisateur utilisateur) throws IOException {
-        this.utilisateurDistant = utilisateur;
-        this.conversation = recupererHistorique(utilisateur);
+    public Conversation(Utilisateur utilisateur) {
+        try {
+            this.utilisateurDistant = utilisateur;
+            this.conversation = recupererHistorique(utilisateur);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     // METHODES

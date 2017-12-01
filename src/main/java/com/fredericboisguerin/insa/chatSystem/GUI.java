@@ -15,7 +15,6 @@ public class GUI extends JFrame {
 
         this.messagerieAssociee = new Messagerie();
 
-
         //Définitions -------------------------------------------------------------------------------------------------
 
         JPanel contentPane = new JPanel();
@@ -30,9 +29,9 @@ public class GUI extends JFrame {
         JPanel infoAboutUserPane  = new JPanel(new GridLayout(2,1));
 
         JButton sendButton = new JButton("Envoyer");
-        sendButton.addActionListener(e ->  this.messagerieAssociee.onSendButtonClicked("Coucou"));
+        sendButton.addActionListener(e ->  this.messagerieAssociee.onSendButtonClicked("Coucou", messagerieAssociee.listOfContactsWithConversations.get(1)));
         JButton changerPseudoButton = new JButton("Changer");
-        changerPseudoButton.addActionListener(e ->  this.messagerieAssociee.onSendButtonClicked("Coucou"));
+        changerPseudoButton.addActionListener(e ->  this.messagerieAssociee.onSendButtonClicked("Coucou", messagerieAssociee.listOfContactsWithConversations.get(1)));
         JButton parametresButton = new JButton("Paramètres");
         sendButton.addActionListener(e ->  this.onParametresButtonClicked());
 
@@ -50,7 +49,7 @@ public class GUI extends JFrame {
 
         //Mise en place du Panel de conversation
         JLabel conversationLabel = new JLabel("Conversation :");
-        JTextField bufferTextField = new JTextField(10);
+        JTextField bufferTextField = new JTextField(20);
         bufferTextField.setToolTipText("Ecrivez ici");
 
 
