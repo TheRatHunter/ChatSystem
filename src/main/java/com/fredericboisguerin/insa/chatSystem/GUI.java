@@ -3,17 +3,26 @@ package com.fredericboisguerin.insa.chatSystem;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.ComponentOrientation;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 
 import static java.awt.BorderLayout.*;
 
-public class GUI extends JFrame {
+public class GUI extends JFrame  {
 
     private Messagerie messagerieAssociee;
 
-    public GUI() {
+    public GUI(){
         super("Application de Chat");
 
-        this.messagerieAssociee = new Messagerie();
+        Utilisateur moi = null;
+        try {
+            moi = new Utilisateur("Lolo", InetAddress.getLocalHost(), 5555);
+        } catch (UnknownHostException e) {
+            e.printStackTrace();
+        }
+
+        this.messagerieAssociee = new Messagerie(moi);
 
         //Définitions -------------------------------------------------------------------------------------------------
 
@@ -28,12 +37,7 @@ public class GUI extends JFrame {
         JPanel bufferPane = new JPanel(new GridLayout(1,2));
         JPanel infoAboutUserPane  = new JPanel(new GridLayout(2,1));
 
-        JButton sendButton = new JButton("Envoyer");
-        sendButton.addActionListener(e ->  this.messagerieAssociee.onSendButtonClicked("Coucou", messagerieAssociee.mapUsersByIP.get(1)));
-        JButton changerPseudoButton = new JButton("Changer");
-        changerPseudoButton.addActionListener(e ->  this.messagerieAssociee.onSendButtonClicked("Coucou", messagerieAssociee.mapUsersByIP.get(1)));
-        JButton parametresButton = new JButton("Paramètres");
-        sendButton.addActionListener(e ->  this.onParametresButtonClicked());
+
 
         // Mise en place du Panel d'informations (en haut)
         JLabel titreLabel = new JLabel("Système de Chat");
@@ -51,6 +55,14 @@ public class GUI extends JFrame {
         JLabel conversationLabel = new JLabel("Conversation :");
         JTextField bufferTextField = new JTextField(20);
         bufferTextField.setToolTipText("Ecrivez ici");
+
+        //Boutons
+        JButton sendButton = new JButton("Envoyer");
+        sendButton.addActionListener(e ->  this.messagerieAssociee.onSendButtonClicked(bufferTextField.getText() ,messagerieAssociee.mapUsersByIP.get(1)));
+        JButton changerPseudoButton = new JButton("Changer");
+        changerPseudoButton.addActionListener(e ->  this.messagerieAssociee.onSendButtonClicked("Coucou", messagerieAssociee.mapUsersByIP.get(1)));
+        JButton parametresButton = new JButton("Paramètres");
+        sendButton.addActionListener(e ->  this.onParametresButtonClicked());
 
 
 

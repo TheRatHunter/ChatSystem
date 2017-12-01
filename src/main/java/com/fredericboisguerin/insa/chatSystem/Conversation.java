@@ -18,12 +18,10 @@ public class Conversation {
     // CONSTRUCTEUR
 
     public Conversation(Utilisateur utilisateur) {
-        try {
             this.utilisateurDistant = utilisateur;
-            this.conversation = recupererHistorique(utilisateur);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+            //this.conversation = recupererHistorique(utilisateur);
+            this.conversation = new ArrayList<String>();
+
     }
 
     // METHODES
