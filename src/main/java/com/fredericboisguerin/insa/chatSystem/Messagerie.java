@@ -1,11 +1,19 @@
 package com.fredericboisguerin.insa.chatSystem;
 
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Label;
+import javafx.stage.Stage;
+
 import java.io.*;
 import java.net.*;
 import java.util.HashMap;
 
 
 public class Messagerie {
+
+
 
     //Déclaration constantes
     final private int PORT_ECOUTE_UDP = 5555;
@@ -22,25 +30,26 @@ public class Messagerie {
     }
 
     //Lance l'interface graphique et les deux écoutes
-    public void go() {
-            GUI monBeauGUI = new GUI();
-            monBeauGUI.afficherMainPage();
+    public void go() throws IOException{
 
-            Thread UDPlistenThread = new Thread(() -> {
-                try {
-                    this.listenOnUDPPort();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            });
+        Thread UDPlistenThread = new Thread(() -> {
+            try {
+                this.listenOnUDPPort();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
 
-            Thread TCPlistenThread = new Thread(() -> {
-                try {
-                    this.listenOnTCPPort();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            });
+        Thread TCPlistenThread = new Thread(() -> {
+            try {
+                this.listenOnTCPPort();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
+
+
+
     }
 
     //Envoie un message quand le bouton envoyer est actionné
@@ -122,7 +131,8 @@ public class Messagerie {
 
     //Ajour d'un message entrant à la conversation
     private void ajouterMessage (InetAddress ip, String message) {
-        mapUsersByIP.get(ip).conv.ajouterMessage(message);
+        if (mapUsersByIP.containsValue(ip))
+            mapUsersByIP.get(ip).conv.ajouterMessage(message);
 
     }
 
