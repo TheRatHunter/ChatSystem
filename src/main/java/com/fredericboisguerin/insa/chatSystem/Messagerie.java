@@ -35,6 +35,7 @@ public class Messagerie {
         Thread UDPlistenThread = new Thread(() -> {
             try {
                 this.listenOnUDPPort();
+
             } catch (Exception e) {
                 e.printStackTrace();
             }
