@@ -6,6 +6,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
@@ -21,12 +23,15 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception{
         try {
             this.primaryStage=primaryStage;
+
+
             Utilisateur moi = new Utilisateur("Lolo", InetAddress.getLocalHost(), 5555);
             Messagerie messagerie = new Messagerie(moi);
             messagerie.go();
 
             initLayout();
             GUIController.getInstance().setNomUtilisateur(messagerie.moi.pseudonyme);
+
 
         } catch (UnknownHostException e) {
             e.printStackTrace();

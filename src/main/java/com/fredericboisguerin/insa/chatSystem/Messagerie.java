@@ -18,6 +18,9 @@ public class Messagerie {
     //Déclaration constantes
     final private int PORT_ECOUTE_UDP = 5555;
     final private int PORT_ECOUTE_TCP = 6666;
+    private static Messagerie instance;
+    private Thread UDPlistenThread;
+    private Thread TCPlistenThread;
 
     //Déclatarion variables
     public Utilisateur moi;
@@ -25,14 +28,11 @@ public class Messagerie {
 
     //Constructeur
     public Messagerie (Utilisateur myself){
-        mapUsersByIP = new HashMap<InetAddress, Utilisateur>();
+        this.mapUsersByIP = new HashMap<InetAddress, Utilisateur>();
         this.moi = myself;
-    }
+        this.instance=this;
 
-    //Lance l'interface graphique et les deux écoutes
-    public void go() throws IOException{
-
-        Thread UDPlistenThread = new Thread(() -> {
+        this.UDPlistenThread = new Thread(() -> {
             try {
                 this.listenOnUDPPort();
 
@@ -41,16 +41,29 @@ public class Messagerie {
             }
         });
 
-        Thread TCPlistenThread = new Thread(() -> {
+        this.TCPlistenThread = new Thread(() -> {
             try {
                 this.listenOnTCPPort();
             } catch (Exception e) {
                 e.printStackTrace();
             }
         });
+    }
 
+    public static Messagerie getInstance() {
+        return instance;
 
+    }
 
+    //Lance l'interface graphique et les deux écoutes
+    public void go() throws IOException{
+        UDPlistenThread.start();
+        TCPlistenThread.start();
+    }
+
+    public void stop() throws IOException{
+        UDPlistenThread.interrupt();
+        TCPlistenThread.interrupt();
     }
 
     //Envoie un message quand le bouton envoyer est actionné
