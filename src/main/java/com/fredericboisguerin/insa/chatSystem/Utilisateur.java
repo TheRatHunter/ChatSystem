@@ -6,15 +6,13 @@ public class Utilisateur {
 
     public String pseudonyme;
     public InetAddress ipAdress;
-    public int port;
     public boolean disponible;
     public Conversation conv;
 
-    public Utilisateur(String pseudo, InetAddress ip, int port) {
+    public Utilisateur(String pseudo, InetAddress ip) {
         this.pseudonyme = pseudo;
         this.ipAdress = ip;
         this.disponible = true;
-        this.port = port;
         this.conv = new Conversation(this);
     }
 

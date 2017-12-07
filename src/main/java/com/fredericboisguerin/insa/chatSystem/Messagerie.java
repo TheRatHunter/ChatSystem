@@ -17,8 +17,10 @@ public class Messagerie {
 
 
     //Déclaration constantes
-    final private int PORT_ECOUTE_UDP = 5555;
-    final private int PORT_ECOUTE_TCP = 6666;
+    private int PORT_ECOUTE_UDP;
+    private int PORT_ECOUTE_TCP;
+    private int PORT_ENVOI_UDP;
+    private int PORT_ENVOI_TCP;
     private static Messagerie instance;
     private Thread UDPlistenThread;
     private Thread TCPlistenThread;
@@ -28,10 +30,13 @@ public class Messagerie {
     public HashMap<InetAddress, Utilisateur> mapUsersByIP;
 
     //Constructeur
-    public Messagerie (Utilisateur myself){
+    public Messagerie (int portEcouteTCP, int portEcouteUDP, int portEnvoiTCP, int portEnvoiUDP){
         this.mapUsersByIP = new HashMap<InetAddress, Utilisateur>();
-        this.moi = myself;
         this.instance=this;
+        this.PORT_ECOUTE_TCP = portEcouteTCP;
+        this.PORT_ECOUTE_UDP = portEcouteUDP;
+        this.PORT_ENVOI_TCP = portEnvoiTCP;
+        this.PORT_ENVOI_UDP = portEnvoiUDP;
 
         this.UDPlistenThread = new Thread(() -> {
             try {
@@ -51,6 +56,9 @@ public class Messagerie {
         });
     }
 
+    public void setMoi(Utilisateur moiUser) {
+        this.moi = moiUser;
+    }
     public static Messagerie getInstance() {
         return instance;
 
@@ -85,8 +93,14 @@ public class Messagerie {
             while (true) {
                 ds.receive(dp);
                 String msgrecu = new String(dp.getData(), 0, dp.getLength());
-                System.out.println("Ajout de l'utilisateur " + msgrecu);
-                ajouterPersonne(msgrecu, dp.getAddress(), dp.getPort());
+                if (!msgrecu.equals("")) {
+                    if (!mapUsersByIP.containsKey(dp.getAddress())) {
+                        System.out.println("Ajout de l'utilisateur " + msgrecu);
+                        ajouterPersonne(msgrecu, dp.getAddress());
+                        notifyOneOfMyPresence(dp.getAddress());
+                        Platform.runLater( ( () -> GUIController.getInstance().updateContacts()));
+                    }
+                }
             }
 
 
@@ -96,14 +110,42 @@ public class Messagerie {
         }
     }
 
+    public void getOthers() {
+        String message = "";
+        byte[] msg = message.getBytes();
+        try {
+            InetAddress adresseDeBroadcast = InetAddress.getByName("255.255.255.255");
+            DatagramPacket dp = new DatagramPacket(msg, msg.length, adresseDeBroadcast, PORT_ENVOI_UDP);
+            DatagramSocket ds = new DatagramSocket();
+            System.out.println("Request datagram sent.");
+            ds.send(dp);
+        }catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }
+
     public void notifyOthersOfMyPresence() {
         String message = moi.pseudonyme;
         byte[] msg = message.getBytes();
         try {
             InetAddress adresseDeBroadcast = InetAddress.getByName("255.255.255.255");
-            DatagramPacket dp = new DatagramPacket(msg, msg.length, adresseDeBroadcast, PORT_ECOUTE_UDP);
+            DatagramPacket dp = new DatagramPacket(msg, msg.length, adresseDeBroadcast, PORT_ENVOI_UDP);
             DatagramSocket ds = new DatagramSocket();
-            System.out.println("Notification datagram sent.");
+            System.out.println("Notification datagram sent to all.");
+            ds.send(dp);
+        }catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    public void notifyOneOfMyPresence(InetAddress ip) {
+        String message = moi.pseudonyme;
+        byte[] msg = message.getBytes();
+        try {
+            InetAddress adresseCible = ip;
+            DatagramPacket dp = new DatagramPacket(msg, msg.length, adresseCible, PORT_ENVOI_UDP);
+            DatagramSocket ds = new DatagramSocket();
+            System.out.println("Notification datagram sent to one.");
             ds.send(dp);
         }catch (IOException ex) {
             ex.printStackTrace();
@@ -150,7 +192,7 @@ public class Messagerie {
     //Envoyer message par TCP
     public void sendMessage(String message, InetAddress ipAddress) {
         try {
-            Socket socket = new Socket(ipAddress, PORT_ECOUTE_TCP);
+            Socket socket = new Socket(ipAddress, PORT_ENVOI_TCP);
             PrintStream out = new PrintStream(socket.getOutputStream());
             out.println(message);
         } catch (Exception e) {
@@ -166,8 +208,8 @@ public class Messagerie {
     }
 
     //Ajout d'un contact à la liste
-    private void ajouterPersonne(String nom, InetAddress ip, int port) {
-        mapUsersByIP.put(ip,new Utilisateur(nom, ip, port));
+    private void ajouterPersonne(String nom, InetAddress ip) {
+        mapUsersByIP.put(ip,new Utilisateur(nom, ip));
     }
 
 

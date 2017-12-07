@@ -12,15 +12,15 @@ public class TestEchangeTCP {
 
     @Test
     public void testTCPlisten() throws Exception {
-        Utilisateur moi = new Utilisateur("Lolo", InetAddress.getLocalHost(), 5555);
-        Messagerie laPoste = new Messagerie(moi);
+        Utilisateur moi = new Utilisateur("Lolo", InetAddress.getLocalHost());
+        Messagerie laPoste = new Messagerie(5555,6666,5557,6667);
         laPoste.listenOnTCPPort();
     }
 
     @Test
     public void testTCPsend() throws IOException {
-        Utilisateur moi = new Utilisateur("Lolo", InetAddress.getLocalHost(), 5555);
-        Messagerie UPS = new Messagerie(moi);
+        Utilisateur moi = new Utilisateur("Lolo", InetAddress.getLocalHost());
+        Messagerie UPS = new Messagerie(5555,6666,5557,6667);
         UPS.sendMessage("Yo !", InetAddress.getLocalHost());
     }
 

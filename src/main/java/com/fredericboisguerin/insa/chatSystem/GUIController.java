@@ -2,6 +2,8 @@ package com.fredericboisguerin.insa.chatSystem;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.util.HashMap;
+import java.util.Map;
 
 
 import javafx.scene.control.Button;
@@ -20,6 +22,7 @@ public class GUIController {
     public Button sendButton = new Button();
 
     private static GUIController instance;
+    public TextFlow contacts;
 
     public GUIController() { instance=this; }
 
@@ -55,7 +58,6 @@ public class GUIController {
         message = "Moi :\n"+message;
 
         Text text = new Text (message);
-        conversationEnCours.setTextAlignment(TextAlignment.RIGHT);
         textInput.clear();
 
         conversationEnCours.getChildren().addAll(text);
@@ -67,8 +69,18 @@ public class GUIController {
     public void afficherMessageRecu(String message){
         String messageAEnvoyer ="Reçu :\n"+message;
         Text text = new Text(messageAEnvoyer);
-        conversationEnCours.setTextAlignment(TextAlignment.LEFT);
         conversationEnCours.getChildren().addAll(text);
 
+    }
+
+    public void updateContacts() {
+        contacts.getChildren().clear();
+        String users = "";
+        for(Map.Entry<InetAddress, Utilisateur> entry : Messagerie.getInstance().mapUsersByIP.entrySet()) {
+            Utilisateur user = entry.getValue();
+            users+=user.pseudonyme+"\n";
+        }
+        Text text = new Text(users);
+        contacts.getChildren().addAll(text);
     }
 }
