@@ -1,5 +1,6 @@
 package com.fredericboisguerin.insa.chatSystem;
 
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -118,14 +119,28 @@ public class Messagerie {
             System.out.println("Ecoute de messages entrants...");
             while (true) {
                 Socket socketClient = socketServeur.accept();
-                String message = new String("");
                 BufferedReader in = new BufferedReader(new InputStreamReader(socketClient.getInputStream()));
-                PrintStream out = new PrintStream(socketClient.getOutputStream());
-                message = in.readLine();
+
+                String temp="";
+                String line;
+                while ((line = in.readLine()) != null) {
+                    if (line.isEmpty()) {
+                        break;
+                    }
+                    temp += line+"\n";
+                }
+
+                String message = temp;
+
                 System.out.println("Connexion établie avec " + socketClient.getInetAddress());
-                System.out.println("Chaîne reçue : " + message + "\n");
+                System.out.println("Chaîne reçue : " + message);
                 ajouterMessage(socketClient.getInetAddress(), message);
+
+                Platform.runLater( ( () -> GUIController.getInstance().afficherMessageRecu(message)));
+
                 socketClient.close();
+
+
             }
         } catch (Exception e) {
             e.printStackTrace();
