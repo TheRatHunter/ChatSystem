@@ -28,10 +28,13 @@ public class Messagerie {
     //Déclatarion variables
     public Utilisateur moi;
     public HashMap<InetAddress, Utilisateur> mapUsersByIP;
+    //Utilisée pour la vérification de l'unicité des noms
+    public HashMap<InetAddress, String> mapNamesByIP;
 
     //Constructeur
     public Messagerie (int portEcouteTCP, int portEcouteUDP, int portEnvoiTCP, int portEnvoiUDP){
         this.mapUsersByIP = new HashMap<InetAddress, Utilisateur>();
+        this.mapNamesByIP = new HashMap<InetAddress, String>();
         this.instance=this;
         this.PORT_ECOUTE_TCP = portEcouteTCP;
         this.PORT_ECOUTE_UDP = portEcouteUDP;
@@ -75,11 +78,6 @@ public class Messagerie {
         TCPlistenThread.interrupt();
     }
 
-    //Envoie un message quand le bouton envoyer est actionné
-    public void onSendButtonClicked(String message, Utilisateur distantUser) {
-        Thread envoiMessageThread = new Thread(() -> { sendMessage(message, distantUser.ipAdress); });
-    }
-
 
 
     //Ecoute de la connection UDP de nouveaux utilisateurs
@@ -89,10 +87,11 @@ public class Messagerie {
             byte[] buf = new byte[8196];
             DatagramPacket dp = new DatagramPacket(buf, buf.length);
             DatagramSocket ds = new DatagramSocket(PORT_ECOUTE_UDP);
-            System.out.println("I'm listening, boss.");
+            System.out.println("Ecoute UDP sur le port "+PORT_ECOUTE_UDP+"...");
             while (true) {
                 ds.receive(dp);
                 String msgrecu = new String(dp.getData(), 0, dp.getLength());
+                //Si le message n'est pas vide alors on doit ajouter le nom de l'utilisateur
                 if (!msgrecu.equals("")) {
                     if (!mapUsersByIP.containsKey(dp.getAddress())) {
                         System.out.println("Ajout de l'utilisateur " + msgrecu);
@@ -157,8 +156,9 @@ public class Messagerie {
     //Ecouter les messages entrants sur le port TCP
     public void listenOnTCPPort() {
         try {
+
             ServerSocket socketServeur = new ServerSocket(PORT_ECOUTE_TCP);
-            System.out.println("Ecoute de messages entrants...");
+            System.out.println("Ecoute TCP sur le port "+PORT_ECOUTE_TCP+"...");
             while (true) {
                 Socket socketClient = socketServeur.accept();
                 BufferedReader in = new BufferedReader(new InputStreamReader(socketClient.getInputStream()));
@@ -173,10 +173,17 @@ public class Messagerie {
                 }
 
                 String message = temp;
-
                 System.out.println("Connexion établie avec " + socketClient.getInetAddress());
                 System.out.println("Chaîne reçue : " + message);
+
                 ajouterMessage(socketClient.getInetAddress(), message);
+                //On actualise la conversation seulement si l'utilisateur courant a changé
+                GUIController.getInstance().userCourant=mapUsersByIP.get(socketClient.getInetAddress());
+
+                if (!(GUIController.getInstance().userCourant.equals(GUIController.getInstance().userPrécédent)))
+                    Platform.runLater( ( () -> GUIController.getInstance().conversationEnCours.getChildren().clear()));
+
+                GUIController.getInstance().userPrécédent=GUIController.getInstance().userCourant;
 
                 Platform.runLater( ( () -> GUIController.getInstance().afficherMessageRecu(message)));
 
@@ -210,6 +217,7 @@ public class Messagerie {
     //Ajout d'un contact à la liste
     private void ajouterPersonne(String nom, InetAddress ip) {
         mapUsersByIP.put(ip,new Utilisateur(nom, ip));
+        mapNamesByIP.put(ip,nom);
     }
 
 

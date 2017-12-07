@@ -21,7 +21,7 @@ public class ConnectionPanel {
 
     public void onOKButtonClicked(ActionEvent actionEvent) {
         String pseudoPropose = champPseudo.getCharacters().toString();
-        if ((!pseudoPropose.isEmpty()) && (pseudoPropose.length()<20) && (!Messagerie.getInstance().mapUsersByIP.containsValue(pseudoPropose)) ) {
+        if ((!pseudoPropose.isEmpty()) && (pseudoPropose.length()<30) && (!Messagerie.getInstance().mapNamesByIP.containsValue(pseudoPropose)) ) {
             pseudoOK=true;
             pseudo = pseudoPropose ;
             champPseudo.setStyle("-fx-background-color: #ffffff;");
