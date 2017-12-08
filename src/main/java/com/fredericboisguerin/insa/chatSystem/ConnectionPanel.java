@@ -4,6 +4,7 @@ import com.fredericboisguerin.insa.Main;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.text.Text;
 
 public class ConnectionPanel {
 
@@ -12,6 +13,7 @@ public class ConnectionPanel {
     public boolean pseudoOK = false;
     private static ConnectionPanel instance;
     public String pseudo = "null";
+    public Text texteConnexion;
 
     public ConnectionPanel() { instance=this; }
 
@@ -26,8 +28,12 @@ public class ConnectionPanel {
             pseudo = pseudoPropose ;
             champPseudo.setStyle("-fx-background-color: #ffffff;");
 
+
         } else {
             champPseudo.setStyle("-fx-background-color: #FE5151;");
+            if (pseudoPropose.isEmpty()) texteConnexion.setText("Veuillez choisir un pseudo non vide :");
+            if (pseudoPropose.length()>=30) texteConnexion.setText("Veuillez choisir un pseudo plus court :");
+            if (Messagerie.getInstance().mapNamesByIP.containsValue(pseudoPropose)) texteConnexion.setText("Pseudo déjà pris. Réessayez :");
             champPseudo.clear();
         }
 

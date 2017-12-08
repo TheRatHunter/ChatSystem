@@ -5,6 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 import java.io.*;
@@ -87,18 +88,23 @@ public class Messagerie {
             byte[] buf = new byte[8196];
             DatagramPacket dp = new DatagramPacket(buf, buf.length);
             DatagramSocket ds = new DatagramSocket(PORT_ECOUTE_UDP);
-            System.out.println("Ecoute UDP sur le port "+PORT_ECOUTE_UDP+"...");
             while (true) {
+                System.out.println("Ecoute UDP sur le port "+PORT_ECOUTE_UDP+"...");
                 ds.receive(dp);
                 String msgrecu = new String(dp.getData(), 0, dp.getLength());
                 //Si le message n'est pas vide alors on doit ajouter le nom de l'utilisateur
                 if (!msgrecu.equals("")) {
                     if (!mapUsersByIP.containsKey(dp.getAddress())) {
+                        //Si on reçoit un message contenant un nom nouveau on y répond avec notre nom et on l'ajoute
                         System.out.println("Ajout de l'utilisateur " + msgrecu);
                         ajouterPersonne(msgrecu, dp.getAddress());
                         notifyOneOfMyPresence(dp.getAddress());
                         Platform.runLater( ( () -> GUIController.getInstance().updateContacts()));
                     }
+                }
+                else  {
+                    //Si on reçoit un message vide on informe de notre présence
+                    Messagerie.getInstance().notifyOneOfMyPresence(dp.getAddress());
                 }
             }
 
@@ -138,17 +144,20 @@ public class Messagerie {
     }
 
     public void notifyOneOfMyPresence(InetAddress ip) {
-        String message = moi.pseudonyme;
-        byte[] msg = message.getBytes();
-        try {
-            InetAddress adresseCible = ip;
-            DatagramPacket dp = new DatagramPacket(msg, msg.length, adresseCible, PORT_ENVOI_UDP);
-            DatagramSocket ds = new DatagramSocket();
-            System.out.println("Notification datagram sent to one.");
-            ds.send(dp);
-        }catch (IOException ex) {
-            ex.printStackTrace();
+        if (moi!=null) {
+            String message = moi.pseudonyme;
+            byte[] msg = message.getBytes();
+            try {
+                InetAddress adresseCible = ip;
+                DatagramPacket dp = new DatagramPacket(msg, msg.length, adresseCible, PORT_ENVOI_UDP);
+                DatagramSocket ds = new DatagramSocket();
+                System.out.println("Notification datagram sent to one.");
+                ds.send(dp);
+            }catch (IOException ex) {
+                ex.printStackTrace();
+            }
         }
+
     }
 
 
@@ -158,8 +167,8 @@ public class Messagerie {
         try {
 
             ServerSocket socketServeur = new ServerSocket(PORT_ECOUTE_TCP);
-            System.out.println("Ecoute TCP sur le port "+PORT_ECOUTE_TCP+"...");
             while (true) {
+                System.out.println("Ecoute TCP sur le port "+PORT_ECOUTE_TCP+"...");
                 Socket socketClient = socketServeur.accept();
                 BufferedReader in = new BufferedReader(new InputStreamReader(socketClient.getInputStream()));
 
@@ -185,7 +194,8 @@ public class Messagerie {
 
                 GUIController.getInstance().userPrécédent=GUIController.getInstance().userCourant;
 
-                Platform.runLater( ( () -> GUIController.getInstance().afficherMessageRecu(message)));
+                Platform.runLater( ( () -> GUIController.getInstance().afficherMessage(GUIController.getInstance().userCourant.pseudonyme+" :\n"+message, false)));
+
 
                 socketClient.close();
 

@@ -59,10 +59,8 @@ public class GUIController {
             userPrécédent=userCourant;
 
             Messagerie.getInstance().sendMessage(message, userCourant.ipAdress);
-            message = "Moi :\n" + message;
-            Text text = new Text(message);
+            afficherMessage("Moi :\n"+message, true);
             textInput.clear();
-            conversationEnCours.getChildren().addAll(text);
         } else {
             textInput.clear();
             conversationEnCours.getChildren().clear();
@@ -70,25 +68,32 @@ public class GUIController {
             conversationEnCours.getChildren().addAll(text);
         }
 
-
-
-
-
-
     }
 
 
-    public void afficherMessageRecu(String message){
+    public void afficherMessage(String message, boolean deMoi){
         afficherConversation(userCourant);
-        String messageAEnvoyer ="Reçu :\n"+message;
-        Text text = new Text(messageAEnvoyer);
+        String messageRecu = message;
+        Text text = new Text(messageRecu);
+        //Le text alignment n'a pas l'air de marcher dans le textflow : besoin de changer de classe de container ?
+        if (deMoi) {
+            //Appliquer CSS messages de l'utilisateur local
+            text.setStyle("margin-right: 0; -fx-text-alignment: left; -fx-font-size: 14; -fx-fill: slategray;");
+        } else {
+            //Appliquer CSS messages de l'utilisateur distant
+            text.setStyle("-fx-text-alignment: right; -fx-font-size: 14; -fx-fill: darkblue;");
+        }
+        conversationEnCours.setStyle("padding: 5 5 5 5;");
         conversationEnCours.getChildren().addAll(text);
+        conversationEnCours.requestFocus();
+
 
     }
 
     public void afficherConversation(Utilisateur userDistant){
         userCourant = userDistant;
         nomUserCourant.setText(userCourant.pseudonyme);
+        //Rajouter code pour l'import depuis le CSV ici
     }
 
     public void updateContacts() {

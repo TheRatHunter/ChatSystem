@@ -23,10 +23,11 @@ public class Main extends Application {
     private Stage primaryStage;
     private Stage connexionStage;
     //Pour tester sur un seul PC : laisser les ports comme ça pour lancer la première fenêtre et les échanger avant de lancer la seconde !
-    private int portEcouteUDP = 5550;
-    private int portEcouteTCP = 4440;
-    private int portEnvoiUDP = 5551;
-    private int portEnvoiTCP = 4441;
+    //2 utilisateurs maximum sur un unique PC car on mappe les utilisateurs par leur @IP
+    private final int portEcouteUDP = 5550;
+    private final int portEcouteTCP = 4440;
+    private final int portEnvoiUDP = 5551;
+    private final int portEnvoiTCP = 4441;
 
     private Thread gestionApp;
 
@@ -87,7 +88,13 @@ public class Main extends Application {
     }
 
     public void launchMainApp() {
+        connexionStage.setOnCloseRequest( (WindowEvent e) -> closeApp() );
         Messagerie messagerie = new Messagerie(portEcouteTCP,portEcouteUDP,portEnvoiTCP,portEnvoiUDP);
+        try {
+            Messagerie.getInstance().go();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         Messagerie.getInstance().getOthers();
         boolean done = false;
         while (!done) {
@@ -96,26 +103,19 @@ public class Main extends Application {
                 Platform.runLater( ( () -> primaryStage.show()));
                 done=true;
             } else {
-                try {
-                    Thread.sleep(200);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+                try { Thread.sleep(200); } catch (InterruptedException e) { }
             }
         }
 
         Utilisateur moi = null;
         try {
+            primaryStage.setOnCloseRequest( (WindowEvent e) -> closeApp() );
             moi = new Utilisateur(ConnectionPanel.getInstance().pseudo, InetAddress.getLocalHost());
             Messagerie.getInstance().setMoi(moi);
             initLayout();
+            GUIController.getInstance().updateContacts();
             GUIController.getInstance().setNomUtilisateur(messagerie.moi.pseudonyme);
-            messagerie.go();
             Messagerie.getInstance().notifyOthersOfMyPresence();
-
-            primaryStage.setOnCloseRequest( (WindowEvent e) -> closeApp() );
-
-
         } catch (IOException e) {
             e.printStackTrace();
         }
