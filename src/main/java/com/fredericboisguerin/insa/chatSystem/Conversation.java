@@ -1,6 +1,5 @@
 package com.fredericboisguerin.insa.chatSystem;
 
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -13,38 +12,35 @@ public class Conversation {
     // ATTRIBUTS
 
     private Utilisateur utilisateurDistant;
-    private ArrayList<String> conversation;
+    private ArrayList<StringTuple> sauvegarde;
 
     // CONSTRUCTEUR
 
     public Conversation(Utilisateur utilisateur) {
+
+        try {
             this.utilisateurDistant = utilisateur;
-            //this.conversation = recupererHistorique(utilisateur);
-            this.conversation = new ArrayList<String>();
+            this.sauvegarde = recupererHistorique(utilisateur);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
     }
 
     // METHODES
-
-    public void fermerConversation(){
-        enregistrerConversation();
+    public ArrayList<StringTuple> recupererHistorique(Utilisateur utilisateurDistant) throws IOException {
+        //Temporaire
+        return FileManager.getConv(utilisateurDistant.pseudonyme);
     }
 
-    public ArrayList<String> recupererHistorique(Utilisateur utilisateurDistant) throws IOException {
-        ArrayList<String> hist = new ArrayList<String>();
-        CSVReader reader = new CSVReader(new FileReader("contacts.csv"));
-        String [] nextLine;
-        while ((nextLine = reader.readNext()) != null) {
-        }
-        return hist;
+    public void ajouterMessage(String emetteur, String msg) {
+        //On crée un tuple contenant l'emetteur du message et le message lui-meme, et on le sauvegarde dans la conversation
+        StringTuple temp = new StringTuple(emetteur,msg);
+        sauvegarde.add(temp);
     }
 
-    public void ajouterMessage(String msg) {
-        conversation.add(msg);
-    }
-
-    public void enregistrerConversation (){
-        ArrayList<String> conv = new ArrayList<String>();
+    public void enregistrerConversation (String userDistant) {
+        FileManager.saveConv(userDistant, sauvegarde);
     }
 
 }

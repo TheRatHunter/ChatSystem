@@ -1,6 +1,5 @@
 package com.fredericboisguerin.insa.chatSystem;
 
-import com.fredericboisguerin.insa.Main;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;

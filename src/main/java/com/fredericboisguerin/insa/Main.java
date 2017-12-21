@@ -2,32 +2,25 @@ package com.fredericboisguerin.insa;
 import com.fredericboisguerin.insa.chatSystem.*;
 import javafx.application.Application;
 import javafx.application.Platform;
-import javafx.event.Event;
-import javafx.event.EventHandler;
-import javafx.event.EventType;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.input.InputEvent;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
-import org.omg.CORBA.Environment;
 
 import java.io.IOException;
 import java.net.InetAddress;
-import java.net.UnknownHostException;
 
-import static java.lang.Thread.sleep;
 
 public class Main extends Application {
     private Stage primaryStage;
     private Stage connexionStage;
     //Pour tester sur un seul PC : laisser les ports comme ça pour lancer la première fenêtre et les échanger avant de lancer la seconde !
     //2 utilisateurs maximum sur un unique PC car on mappe les utilisateurs par leur @IP
-    private final int portEcouteUDP = 5550;
-    private final int portEcouteTCP = 4440;
-    private final int portEnvoiUDP = 5551;
-    private final int portEnvoiTCP = 4441;
+    private final int portEcouteUDP = 5551;
+    private final int portEcouteTCP = 4441;
+    private final int portEnvoiUDP = 5550;
+    private final int portEnvoiTCP = 4440;
 
     private Thread gestionApp;
 
@@ -37,23 +30,17 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-
             this.primaryStage=primaryStage;
             this.connexionStage=new Stage();
-
             initConnexion();
             initLayout();
-
             connexionStage.show();
-
             /*
             On doit intégrer la gestion de notre application dans un nouveau Thread
             car la fonction start ne doit pas être bloquante
              */
             gestionApp = new Thread ( () -> launchMainApp() );
-
             gestionApp.start();
-
     }
 
     public void initConnexion() {
@@ -88,27 +75,22 @@ public class Main extends Application {
     }
 
     public void launchMainApp() {
-        connexionStage.setOnCloseRequest( (WindowEvent e) -> closeApp() );
-        Messagerie messagerie = new Messagerie(portEcouteTCP,portEcouteUDP,portEnvoiTCP,portEnvoiUDP);
         try {
+            connexionStage.setOnCloseRequest( (WindowEvent e) -> closeApp() );
+            Messagerie messagerie = new Messagerie(portEcouteTCP,portEcouteUDP,portEnvoiTCP,portEnvoiUDP);
             Messagerie.getInstance().go();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        Messagerie.getInstance().getOthers();
-        boolean done = false;
-        while (!done) {
-            if (ConnectionPanel.getInstance().pseudoOK) {
-                Platform.runLater( ( () -> connexionStage.hide()));
-                Platform.runLater( ( () -> primaryStage.show()));
-                done=true;
-            } else {
-                try { Thread.sleep(200); } catch (InterruptedException e) { }
+            Messagerie.getInstance().getOthers();
+            boolean done = false;
+            while (!done) {
+                if (ConnectionPanel.getInstance().pseudoOK) {
+                    Platform.runLater( ( () -> connexionStage.hide()));
+                    Platform.runLater( ( () -> primaryStage.show()));
+                    done=true;
+                } else {
+                    try { Thread.sleep(200); } catch (InterruptedException e) { }
+                }
             }
-        }
-
-        Utilisateur moi = null;
-        try {
+            Utilisateur moi = null;
             primaryStage.setOnCloseRequest( (WindowEvent e) -> closeApp() );
             moi = new Utilisateur(ConnectionPanel.getInstance().pseudo, InetAddress.getLocalHost());
             Messagerie.getInstance().setMoi(moi);

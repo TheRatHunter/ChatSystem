@@ -1,13 +1,9 @@
 package com.fredericboisguerin.insa.chatSystem;
 
-import java.awt.event.ActionEvent;
 import java.net.InetAddress;
-import java.net.UnknownHostException;
-import java.util.HashMap;
 import java.util.Map;
 
 
-import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
@@ -86,8 +82,6 @@ public class GUIController {
         conversationEnCours.setStyle("padding: 5 5 5 5;");
         conversationEnCours.getChildren().addAll(text);
         conversationEnCours.requestFocus();
-
-
     }
 
     public void afficherConversation(Utilisateur userDistant){
@@ -111,5 +105,12 @@ public class GUIController {
             contacts.getChildren().addAll(retourCharriot);
         }
 
+    }
+
+    public void clearConversation() {
+        conversationEnCours.getChildren().clear();
+        userCourant=null;
+        nomUserCourant.setText("Aucun utilisateur sélectionné");
+        System.out.println("Fenêtre nettoyée.");
     }
 }

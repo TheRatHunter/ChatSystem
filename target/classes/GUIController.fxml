@@ -9,7 +9,7 @@
     <children>
       <Pane layoutY="-1.0" prefHeight="36.0" prefWidth="850.0" style="-fx-background-color: #313131;">
          <children>
-            <Label fx:id="labelNomUtilisateur" layoutX="149.0" layoutY="11.0" text="null" textFill="WHITE">
+            <Label fx:id="labelNomUtilisateur" layoutX="182.0" layoutY="9.0" text="null" textFill="WHITE">
                <font>
                   <Font name="Calibri" size="14.0" />
                </font>
