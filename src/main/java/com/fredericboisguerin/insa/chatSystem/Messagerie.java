@@ -269,6 +269,8 @@ public class Messagerie {
         Utilisateur toRemove = mapUsersByIP.get(ip);
         mapUsersByIP.remove(ip, toRemove);
         mapNamesByIP.remove(ip, toRemove.pseudonyme);
+        GUIController.getInstance().userPrécédent=GUIController.getInstance().userCourant;
+        GUIController.getInstance().userCourant=null;
     }
 
 

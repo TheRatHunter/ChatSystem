@@ -1,5 +1,0 @@
-uu SAID := i
-Moi SAID := ii
-uu SAID := iii
-uu SAID := aa
-

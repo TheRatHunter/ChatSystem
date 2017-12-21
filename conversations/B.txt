@@ -1,8 +1,18 @@
-B SAID := a
-oi SAID := aa
- SAID := aaa
- SAID := Salut !
-B SAID := ff
+B SAID := zz
 
-Moi SAID := ff
+Moi SAID := vvvv
+
+B SAID := aa
+
+Moi SAID := salut toi !
+
+B SAID := azaz
+
+B SAID := Yoooooo !!! re :))))
+
+Moi SAID := ça maaaaaaaaaaaaaaaaaarrrrrrrrrrrrccheeeeeeeee
+
+B SAID := Coucou !
+
+Moi SAID := ça va toi ? ;)
 

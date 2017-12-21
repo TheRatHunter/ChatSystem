@@ -22,7 +22,7 @@ public class ConnectionPanel {
 
     public void onOKButtonClicked(ActionEvent actionEvent) {
         String pseudoPropose = champPseudo.getCharacters().toString();
-        if ((!pseudoPropose.isEmpty()) && (pseudoPropose.length()<30) && (!Messagerie.getInstance().mapNamesByIP.containsValue(pseudoPropose)) ) {
+        if ((!pseudoPropose.isEmpty()) && (pseudoPropose.length()<30) && (!Messagerie.getInstance().mapNamesByIP.containsValue(pseudoPropose)) && (!pseudoPropose.contains("SAID")) ) {
             pseudoOK=true;
             pseudo = pseudoPropose ;
             champPseudo.setStyle("-fx-background-color: #ffffff;");
@@ -33,6 +33,7 @@ public class ConnectionPanel {
             if (pseudoPropose.isEmpty()) texteConnexion.setText("Veuillez choisir un pseudo non vide :");
             if (pseudoPropose.length()>=30) texteConnexion.setText("Veuillez choisir un pseudo plus court :");
             if (Messagerie.getInstance().mapNamesByIP.containsValue(pseudoPropose)) texteConnexion.setText("Pseudo déjà pris. Réessayez :");
+            if (pseudoPropose.contains("SAID")) texteConnexion.setText("Pseudo invalide. Réessayez :");
             champPseudo.clear();
         }
 

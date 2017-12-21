@@ -52,7 +52,7 @@ public class FileManager{
                            String nom = ligne.substring(0,indexSepatateur);
                            String msg = ligne.substring(indexSepatateur+9, ligne.length());
                            System.out.println(nom+ " --- "+msg);
-                           StringTuple temp = new StringTuple(nom,msg);
+                           StringTuple temp = new StringTuple(nom,msg+"\n");
                            resultat.add(temp);
                            System.out.println("Message récupéré.");
                            br.skip(1);

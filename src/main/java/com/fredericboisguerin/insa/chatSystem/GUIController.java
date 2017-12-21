@@ -50,11 +50,6 @@ public class GUIController {
         }
 
         if (userCourant!=null) {
-            //Si l'utilisateur a changé on nettoie la fenêtre
-            //if ( !(userCourant.equals(userPrécédent)))
-             //   conversationEnCours.getChildren().clear();
-            userPrécédent=userCourant;
-
             Messagerie.getInstance().sendMessage(message, userCourant.ipAdress);
             afficherMessage("Moi :\n"+message, true);
             textInput.clear();
@@ -69,35 +64,23 @@ public class GUIController {
 
 
     public void afficherMessage(String message, boolean deMoi){
-        if (!userCourant.ipAdress.equals(userPrécédent.ipAdress))
+        if (userCourant!=null)
             afficherConversation(userCourant);
-        String messageRecu = message;
-        Text text = new Text(messageRecu);
-        //Le text alignment n'a pas l'air de marcher dans le textflow : besoin de changer de classe de container ?
-        if (deMoi) {
-            //Appliquer CSS messages de l'utilisateur local
-            text.setStyle("margin-right: 0; -fx-text-alignment: left; -fx-font-size: 14; -fx-fill: slategray;");
-        } else {
-            //Appliquer CSS messages de l'utilisateur distant
-            text.setStyle("-fx-text-alignment: right; -fx-font-size: 14; -fx-fill: darkblue;");
-        }
-        conversationEnCours.setStyle("padding: 5 5 5 5;");
-        conversationEnCours.getChildren().addAll(text);
-        conversationEnCours.requestFocus();
     }
 
     public void afficherConversation(Utilisateur userDistant){
+        userPrécédent = userCourant;
         userCourant = userDistant;
         nomUserCourant.setText(userCourant.pseudonyme);
         conversationEnCours.getChildren().clear();
         for (StringTuple st : Messagerie.getInstance().mapUsersByIP.get(userDistant.ipAdress).conv.sauvegarde) {
             Text text;
             if (st.nom.equals("Moi")) {
-                text = new Text("Moi : \n" + st.msg + "\n");
+                text = new Text("Moi : \n" + st.msg);
                 //Appliquer CSS messages de l'utilisateur local
                 text.setStyle("margin-right: 0; -fx-text-alignment: left; -fx-font-size: 14; -fx-fill: slategray;");
             } else {
-                text = new Text(userDistant.pseudonyme + " \n" + st.msg + "\n");
+                text = new Text(userDistant.pseudonyme + " :\n" + st.msg);
                 //Appliquer CSS messages de l'utilisateur distant
                 text.setStyle("-fx-text-alignment: right; -fx-font-size: 14; -fx-fill: darkblue;");
             }
