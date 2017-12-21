@@ -12,11 +12,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="Main.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Main.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/fredericboisguerin/insa/Main.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="204">
-              <caret line="22" column="41" lean-forward="false" selection-start-line="22" selection-start-column="41" selection-end-line="22" selection-end-column="41" />
+            <state relative-caret-position="408">
+              <caret line="34" column="28" lean-forward="false" selection-start-line="34" selection-start-column="28" selection-end-line="34" selection-end-column="28" />
               <folding>
                 <element signature="e#951#952#0" expanded="true" />
                 <element signature="e#979#980#0" expanded="true" />
@@ -25,11 +25,21 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="pom.xml" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/pom.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-222">
+              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="Messagerie.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/fredericboisguerin/insa/chatSystem/Messagerie.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="368">
-              <caret line="210" column="94" lean-forward="true" selection-start-line="210" selection-start-column="94" selection-end-line="210" selection-end-column="94" />
+              <caret line="210" column="94" lean-forward="false" selection-start-line="210" selection-start-column="94" selection-end-line="210" selection-end-column="94" />
               <folding />
             </state>
           </provider>
@@ -52,7 +62,7 @@
         <entry file="file://$PROJECT_DIR$/src/main/java/com/fredericboisguerin/insa/chatSystem/ConnectionPanel.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="391">
-              <caret line="28" column="0" lean-forward="true" selection-start-line="28" selection-start-column="0" selection-end-line="28" selection-end-column="0" />
+              <caret line="28" column="0" lean-forward="false" selection-start-line="28" selection-start-column="0" selection-end-line="28" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -71,8 +81,8 @@
       <file leaf-file-name="FileManager.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/fredericboisguerin/insa/chatSystem/FileManager.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="475">
-              <caret line="54" column="73" lean-forward="false" selection-start-line="54" selection-start-column="73" selection-end-line="54" selection-end-column="73" />
+            <state relative-caret-position="390">
+              <caret line="49" column="72" lean-forward="false" selection-start-line="49" selection-start-column="72" selection-end-line="49" selection-end-column="72" />
               <folding />
             </state>
           </provider>
@@ -148,9 +158,9 @@
         <option value="$PROJECT_DIR$/src/test/java/com/fredericboisguerin/insa/test/testEchange.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/fredericboisguerin/insa/chatSystem/Conversation.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/fredericboisguerin/insa/chatSystem/Messagerie.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/fredericboisguerin/insa/chatSystem/FileManager.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/fredericboisguerin/insa/chatSystem/GUIController.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/fredericboisguerin/insa/chatSystem/ConnectionPanel.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/fredericboisguerin/insa/chatSystem/FileManager.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/fredericboisguerin/insa/Main.java" />
       </list>
     </option>
@@ -547,7 +557,7 @@
       <workItem from="1513693828416" duration="217000" />
       <workItem from="1513763422554" duration="1119000" />
       <workItem from="1513872826697" duration="18170000" />
-      <workItem from="1513894575346" duration="1322000" />
+      <workItem from="1513894575346" duration="1537000" />
     </task>
     <servers />
   </component>
@@ -584,7 +594,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="20828000" />
+    <option name="totallyTimeSpent" value="21043000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
@@ -630,14 +640,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/fredericboisguerin/insa/chatSystem/Messagerie.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1139">
-          <caret line="78" column="5" lean-forward="false" selection-start-line="78" selection-start-column="5" selection-end-line="78" selection-end-column="5" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/fredericboisguerin/insa/chatSystem/GUIController.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1037">
@@ -968,22 +970,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/fredericboisguerin/insa/chatSystem/StringTuple.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="7" column="52" lean-forward="false" selection-start-line="7" selection-start-column="52" selection-end-line="7" selection-end-column="52" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/fredericboisguerin/insa/chatSystem/FileManager.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="475">
-          <caret line="54" column="73" lean-forward="false" selection-start-line="54" selection-start-column="73" selection-end-line="54" selection-end-column="73" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/fredericboisguerin/insa/chatSystem/GUIController.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="305">
@@ -995,7 +981,7 @@
     <entry file="file://$PROJECT_DIR$/src/main/java/com/fredericboisguerin/insa/chatSystem/Messagerie.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="368">
-          <caret line="210" column="94" lean-forward="true" selection-start-line="210" selection-start-column="94" selection-end-line="210" selection-end-column="94" />
+          <caret line="210" column="94" lean-forward="false" selection-start-line="210" selection-start-column="94" selection-end-line="210" selection-end-column="94" />
           <folding />
         </state>
       </provider>
@@ -1014,19 +1000,43 @@
     <entry file="file://$PROJECT_DIR$/src/main/java/com/fredericboisguerin/insa/chatSystem/ConnectionPanel.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="391">
-          <caret line="28" column="0" lean-forward="true" selection-start-line="28" selection-start-column="0" selection-end-line="28" selection-end-column="0" />
+          <caret line="28" column="0" lean-forward="false" selection-start-line="28" selection-start-column="0" selection-end-line="28" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/fredericboisguerin/insa/chatSystem/StringTuple.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="7" column="52" lean-forward="false" selection-start-line="7" selection-start-column="52" selection-end-line="7" selection-end-column="52" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/fredericboisguerin/insa/chatSystem/FileManager.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="390">
+          <caret line="49" column="72" lean-forward="false" selection-start-line="49" selection-start-column="72" selection-end-line="49" selection-end-column="72" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/fredericboisguerin/insa/Main.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="22" column="41" lean-forward="false" selection-start-line="22" selection-start-column="41" selection-end-line="22" selection-end-column="41" />
+        <state relative-caret-position="408">
+          <caret line="34" column="28" lean-forward="false" selection-start-line="34" selection-start-column="28" selection-end-line="34" selection-end-column="28" />
           <folding>
             <element signature="e#951#952#0" expanded="true" />
             <element signature="e#979#980#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pom.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-222">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>

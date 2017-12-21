@@ -48,10 +48,9 @@ public class FileManager{
                        if (!ligne.equals("")) {
                            System.out.println(ligne);
                            int indexSepatateur = ligne.indexOf(" SAID");
-                           System.out.println(indexSepatateur);
                            String nom = ligne.substring(0,indexSepatateur);
                            String msg = ligne.substring(indexSepatateur+9, ligne.length());
-                           System.out.println(nom+ " --- "+msg);
+                           System.out.println(nom+ " / "+msg);
                            StringTuple temp = new StringTuple(nom,msg+"\n");
                            resultat.add(temp);
                            System.out.println("Message récupéré.");
