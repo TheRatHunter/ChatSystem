@@ -37,6 +37,7 @@ public class Conversation {
         //On crée un tuple contenant l'emetteur du message et le message lui-meme, et on le sauvegarde dans la conversation
         StringTuple temp = new StringTuple(emetteur,msg);
         sauvegarde.add(temp);
+        System.out.println("Enregistrement du message :"+msg);
     }
 
     public void enregistrerConversation (String userDistant) {

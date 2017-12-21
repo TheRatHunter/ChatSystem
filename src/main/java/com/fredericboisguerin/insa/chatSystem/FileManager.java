@@ -23,7 +23,7 @@ public class FileManager{
                FileWriter stylo = new FileWriter(convFile);
                for(StringTuple message : conversation) {
                    String aEcrire = (message.nom + " SAID := " + message.msg + "\n");
-                   stylo.write(aEcrire);
+                   stylo.write(aEcrire+"\n");
                    System.out.println("Ecriture d'un message dans le fichier : "+message.nom + " SAID := " + message.msg + "\n");
                }
                stylo.close();

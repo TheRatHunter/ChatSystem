@@ -248,10 +248,11 @@ public class Messagerie {
     //Ajour d'un message entrant à la conversation
     private void ajouterMessage (InetAddress ip, String message, Boolean deMoi) {
         if (deMoi) {
-            if (mapUsersByIP.containsValue(ip))
+            if (mapUsersByIP.containsKey(ip)) {
                 mapUsersByIP.get(ip).conv.ajouterMessage("Moi", message);
+            }
         } else {
-            if (mapUsersByIP.containsValue(ip))
+            if (mapUsersByIP.containsKey(ip))
                 mapUsersByIP.get(ip).conv.ajouterMessage(mapUsersByIP.get(ip).pseudonyme, message);
         }
 
