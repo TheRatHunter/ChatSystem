@@ -1,0 +1,8 @@
+Moi SAID := a
+ SAID := aa
+oi SAID := aaa
+oi SAID := Salut !
+Moi SAID := ff
+
+A SAID := ff
+

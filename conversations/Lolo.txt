@@ -1,4 +1,0 @@
-Moi SAID := Salut toi
-
-Lolo SAID := Yo !
-

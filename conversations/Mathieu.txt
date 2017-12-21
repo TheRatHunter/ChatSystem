@@ -1,4 +1,0 @@
-Mathieu SAID := Salut toi
-
-Moi SAID := Yo !
-

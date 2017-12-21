@@ -12,7 +12,7 @@ public class Conversation {
     // ATTRIBUTS
 
     private Utilisateur utilisateurDistant;
-    private ArrayList<StringTuple> sauvegarde;
+    public ArrayList<StringTuple> sauvegarde;
 
     // CONSTRUCTEUR
 

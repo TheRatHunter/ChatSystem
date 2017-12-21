@@ -1,0 +1,8 @@
+B SAID := a
+oi SAID := aa
+ SAID := aaa
+ SAID := Salut !
+B SAID := ff
+
+Moi SAID := ff
+

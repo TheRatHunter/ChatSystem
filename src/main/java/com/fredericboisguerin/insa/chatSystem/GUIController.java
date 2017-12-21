@@ -1,5 +1,6 @@
 package com.fredericboisguerin.insa.chatSystem;
 
+import java.io.IOException;
 import java.net.InetAddress;
 import java.util.Map;
 
@@ -50,8 +51,8 @@ public class GUIController {
 
         if (userCourant!=null) {
             //Si l'utilisateur a changé on nettoie la fenêtre
-            if ( !(userCourant.equals(userPrécédent)))
-                conversationEnCours.getChildren().clear();
+            //if ( !(userCourant.equals(userPrécédent)))
+             //   conversationEnCours.getChildren().clear();
             userPrécédent=userCourant;
 
             Messagerie.getInstance().sendMessage(message, userCourant.ipAdress);
@@ -68,7 +69,8 @@ public class GUIController {
 
 
     public void afficherMessage(String message, boolean deMoi){
-        afficherConversation(userCourant);
+        if (!userCourant.ipAdress.equals(userPrécédent.ipAdress))
+            afficherConversation(userCourant);
         String messageRecu = message;
         Text text = new Text(messageRecu);
         //Le text alignment n'a pas l'air de marcher dans le textflow : besoin de changer de classe de container ?
@@ -87,7 +89,22 @@ public class GUIController {
     public void afficherConversation(Utilisateur userDistant){
         userCourant = userDistant;
         nomUserCourant.setText(userCourant.pseudonyme);
-        //Rajouter code pour l'import depuis le CSV ici
+        conversationEnCours.getChildren().clear();
+        for (StringTuple st : Messagerie.getInstance().mapUsersByIP.get(userDistant.ipAdress).conv.sauvegarde) {
+            Text text;
+            if (st.nom.equals("Moi")) {
+                text = new Text("Moi : \n" + st.msg + "\n");
+                //Appliquer CSS messages de l'utilisateur local
+                text.setStyle("margin-right: 0; -fx-text-alignment: left; -fx-font-size: 14; -fx-fill: slategray;");
+            } else {
+                text = new Text(userDistant.pseudonyme + " \n" + st.msg + "\n");
+                //Appliquer CSS messages de l'utilisateur distant
+                text.setStyle("-fx-text-alignment: right; -fx-font-size: 14; -fx-fill: darkblue;");
+            }
+            conversationEnCours.setStyle("padding: 5 5 5 5;");
+            conversationEnCours.getChildren().addAll(text);
+            conversationEnCours.requestFocus();
+        }
     }
 
     public void updateContacts() {
